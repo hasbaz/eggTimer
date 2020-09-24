@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public void startClick(View view){
         if (!isRunning) {
             seekbar.setEnabled(false);
+            // could add some more time to millisInFuture to account for lag
             timer = new CountDownTimer(seekbar.getProgress() * 1000, 1000) {
                 @Override
                 public void onTick(long l) {
@@ -77,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    seekbar.setEnabled(true);
-                    isRunning=false;
-                    startButton.setText("Start");
+                    reset();
                     MediaPlayer ring = MediaPlayer.create(MainActivity.this, R.raw.air);
                     ring.start();
                 }
@@ -88,10 +87,16 @@ public class MainActivity extends AppCompatActivity {
             startButton.setText("Stop!");
             isRunning=true;
         }else if (isRunning) {
-            seekbar.setEnabled(true);
-            isRunning=false;
-            startButton.setText("Start");
+            reset();
             timer.cancel();
         }
+    }
+    /*
+    resets the timer
+     */
+    public void reset(){
+        seekbar.setEnabled(true);
+        isRunning=false;
+        startButton.setText("Start");
     }
 }
