@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Link Vars to UI elements
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         timerText = (TextView) findViewById(R.id.timerTextVeiw);
         startButton = (Button) findViewById(R.id.startButton);
@@ -46,14 +47,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    /*
+    This method updates the timer text with the time that is chosen
+    @param seconds this is the amount of seconds that you wish to show on the timer text
+     */
     public void updateTimeText (int seconds){
         String time = makeTimeString(seconds);
         timerText.setText(time);
     }
+    /*
+    This method formats an amount of seconds int mins and secs
+    @param seconds this is the amount of seconds that you wish to have formatted to mins and secs
+    @return the correctly formatted string
+     */
     public String makeTimeString(int seconds){
 
         return String.format("%02d" +":" +"%02d" , seconds/60,seconds%60);
     }
+
     public void startClick(View view){
         if (!isRunning) {
             seekbar.setEnabled(false);
@@ -62,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onTick(long l) {
                     seekbar.setProgress(seekbar.getProgress() - 1);
                     updateTimeText(seekbar.getProgress());
-
                 }
 
                 @Override
